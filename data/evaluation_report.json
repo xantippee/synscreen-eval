@@ -1,0 +1,1290 @@
+{
+    "summary": {
+        "threat_chimeric": {
+            "tier3_trigger_rate": 0.0,
+            "average_ml_probability": 0.06,
+            "total_count": 31,
+            "average_ref_identity": 0.8272,
+            "detection_rate": 0.7742,
+            "tier1_trigger_rate": 0.2903,
+            "flagged_count": 24,
+            "tier2_trigger_rate": 0.6774
+        },
+        "threat_split": {
+            "tier3_trigger_rate": 1.0,
+            "average_ml_probability": 0.8268,
+            "total_count": 31,
+            "average_ref_identity": 0.9764,
+            "detection_rate": 1.0,
+            "tier1_trigger_rate": 0.2903,
+            "flagged_count": 31,
+            "tier2_trigger_rate": 1.0
+        },
+        "benign_baseline": {
+            "tier3_trigger_rate": 0.0,
+            "average_ml_probability": 0.0041,
+            "false_positive_rate": 0.3448,
+            "total_count": 29,
+            "average_ref_identity": 0.7252,
+            "tier1_trigger_rate": 0.0,
+            "flagged_count": 10,
+            "tier2_trigger_rate": 0.3448
+        },
+        "threat_baseline": {
+            "tier3_trigger_rate": 1.0,
+            "average_ml_probability": 0.9919,
+            "total_count": 31,
+            "average_ref_identity": 0.9557,
+            "detection_rate": 1.0,
+            "tier1_trigger_rate": 0.2903,
+            "flagged_count": 31,
+            "tier2_trigger_rate": 1.0
+        },
+        "threat_codon_opt": {
+            "tier3_trigger_rate": 1.0,
+            "average_ml_probability": 0.9919,
+            "total_count": 31,
+            "average_ref_identity": 0.9557,
+            "detection_rate": 1.0,
+            "tier1_trigger_rate": 0.1613,
+            "flagged_count": 31,
+            "tier2_trigger_rate": 1.0
+        }
+    },
+    "detections": {
+        "threat_chimeric": [
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 0.8333333333333334,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6,
+                "flagged": false,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.5714285714285714,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 0.8333333333333334,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 0.8,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.5384615384615384,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6666666666666666,
+                "flagged": false,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6363636363636364,
+                "flagged": false,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.5217391304347826,
+                "flagged": false,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.7142857142857143,
+                "flagged": false,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 0.8333333333333334,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6666666666666666,
+                "flagged": false,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6153846153846154,
+                "flagged": false,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 0.8,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 0.8,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 0.8333333333333334,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 0.8,
+                "flagged": true,
+                "tier3_prob": 0.06
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.5789473684210527,
+                "flagged": true,
+                "tier3_prob": 0.06
+            }
+        ],
+        "threat_split": [
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9714285714285714,
+                "flagged": true,
+                "tier3_prob": 0.94
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9615384615384616,
+                "flagged": true,
+                "tier3_prob": 0.8
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9913793103448276,
+                "flagged": true,
+                "tier3_prob": 0.84
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9230769230769231,
+                "flagged": true,
+                "tier3_prob": 0.75
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9769230769230769,
+                "flagged": true,
+                "tier3_prob": 0.87
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.85
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9692307692307692,
+                "flagged": true,
+                "tier3_prob": 0.78
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9672131147540983,
+                "flagged": true,
+                "tier3_prob": 0.83
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9846153846153847,
+                "flagged": true,
+                "tier3_prob": 0.94
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9844961240310077,
+                "flagged": true,
+                "tier3_prob": 0.8
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9302325581395349,
+                "flagged": true,
+                "tier3_prob": 0.82
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.74
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.72
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.81
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.84
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9692307692307692,
+                "flagged": true,
+                "tier3_prob": 0.86
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9507042253521126,
+                "flagged": true,
+                "tier3_prob": 0.89
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9615384615384616,
+                "flagged": true,
+                "tier3_prob": 0.92
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.83
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.75
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9694656488549618,
+                "flagged": true,
+                "tier3_prob": 0.85
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.77
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9922480620155039,
+                "flagged": true,
+                "tier3_prob": 0.83
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.79
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9923076923076923,
+                "flagged": true,
+                "tier3_prob": 0.93
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9538461538461539,
+                "flagged": true,
+                "tier3_prob": 0.88
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9694656488549618,
+                "flagged": true,
+                "tier3_prob": 0.85
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9172932330827067,
+                "flagged": true,
+                "tier3_prob": 0.73
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9461538461538461,
+                "flagged": true,
+                "tier3_prob": 0.76
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9846153846153847,
+                "flagged": true,
+                "tier3_prob": 0.84
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 1.0,
+                "flagged": true,
+                "tier3_prob": 0.82
+            }
+        ],
+        "benign_baseline": [
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6666666666666666,
+                "flagged": false,
+                "tier3_prob": 0.01
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6666666666666666,
+                "flagged": false,
+                "tier3_prob": 0.02
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 0.8571428571428571,
+                "flagged": true,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6666666666666666,
+                "flagged": false,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6666666666666666,
+                "flagged": false,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6666666666666666,
+                "flagged": false,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 0.8571428571428571,
+                "flagged": true,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6666666666666666,
+                "flagged": false,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 0.8333333333333334,
+                "flagged": true,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6363636363636364,
+                "flagged": false,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 0.8571428571428571,
+                "flagged": true,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 0.8333333333333334,
+                "flagged": true,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 0.8,
+                "flagged": true,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6666666666666666,
+                "flagged": false,
+                "tier3_prob": 0.01
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6666666666666666,
+                "flagged": false,
+                "tier3_prob": 0.02
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6666666666666666,
+                "flagged": false,
+                "tier3_prob": 0.04
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6666666666666666,
+                "flagged": false,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6666666666666666,
+                "flagged": false,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6666666666666666,
+                "flagged": false,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6666666666666666,
+                "flagged": false,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 0.8571428571428571,
+                "flagged": true,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6666666666666666,
+                "flagged": false,
+                "tier3_prob": 0.01
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6363636363636364,
+                "flagged": false,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6666666666666666,
+                "flagged": false,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.625,
+                "flagged": false,
+                "tier3_prob": 0.01
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 0.8571428571428571,
+                "flagged": true,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 0.8571428571428571,
+                "flagged": true,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": false,
+                "highest_identity": 0.8571428571428571,
+                "flagged": true,
+                "tier3_prob": 0.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": false,
+                "tier3_flag": false,
+                "highest_identity": 0.6666666666666666,
+                "flagged": false,
+                "tier3_prob": 0.0
+            }
+        ],
+        "threat_baseline": [
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9611111111111111,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.961218836565097,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9805555555555555,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9476584022038568,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9335180055401662,
+                "flagged": true,
+                "tier3_prob": 0.95
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9779005524861878,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9806094182825484,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.95,
+                "flagged": true,
+                "tier3_prob": 0.95
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9861111111111112,
+                "flagged": true,
+                "tier3_prob": 0.99
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.95,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9060773480662984,
+                "flagged": true,
+                "tier3_prob": 0.98
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.925,
+                "flagged": true,
+                "tier3_prob": 0.98
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.96398891966759,
+                "flagged": true,
+                "tier3_prob": 0.99
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9861495844875346,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9751381215469613,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9392265193370166,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9449035812672176,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9392265193370166,
+                "flagged": true,
+                "tier3_prob": 0.99
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9750692520775623,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.961218836565097,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9476584022038568,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9338842975206612,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9418282548476454,
+                "flagged": true,
+                "tier3_prob": 0.98
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9527777777777777,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9888888888888889,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9366391184573003,
+                "flagged": true,
+                "tier3_prob": 0.99
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9530386740331491,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9260273972602739,
+                "flagged": true,
+                "tier3_prob": 0.96
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9556786703601108,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9833795013850416,
+                "flagged": true,
+                "tier3_prob": 0.99
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.961218836565097,
+                "flagged": true,
+                "tier3_prob": 1.0
+            }
+        ],
+        "threat_codon_opt": [
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9611111111111111,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.961218836565097,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9805555555555555,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9476584022038568,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9335180055401662,
+                "flagged": true,
+                "tier3_prob": 0.95
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9779005524861878,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9806094182825484,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.95,
+                "flagged": true,
+                "tier3_prob": 0.95
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9861111111111112,
+                "flagged": true,
+                "tier3_prob": 0.99
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.95,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9060773480662984,
+                "flagged": true,
+                "tier3_prob": 0.98
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.925,
+                "flagged": true,
+                "tier3_prob": 0.98
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.96398891966759,
+                "flagged": true,
+                "tier3_prob": 0.99
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9861495844875346,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9751381215469613,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9392265193370166,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9449035812672176,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9392265193370166,
+                "flagged": true,
+                "tier3_prob": 0.99
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9750692520775623,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.961218836565097,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9476584022038568,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9338842975206612,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9418282548476454,
+                "flagged": true,
+                "tier3_prob": 0.98
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9527777777777777,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9888888888888889,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9366391184573003,
+                "flagged": true,
+                "tier3_prob": 0.99
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9530386740331491,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9260273972602739,
+                "flagged": true,
+                "tier3_prob": 0.96
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9556786703601108,
+                "flagged": true,
+                "tier3_prob": 1.0
+            },
+            {
+                "tier1_flag": true,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.9833795013850416,
+                "flagged": true,
+                "tier3_prob": 0.99
+            },
+            {
+                "tier1_flag": false,
+                "tier2_flag": true,
+                "tier3_flag": true,
+                "highest_identity": 0.961218836565097,
+                "flagged": true,
+                "tier3_prob": 1.0
+            }
+        ]
+    }
+}
