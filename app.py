@@ -65,7 +65,7 @@ st.markdown("""
         margin-bottom: 1rem;
     }
 </style>
-""", unsafe_style_html=True)
+""", unsafe_allow_html=True)
 
 # ----------------- DATA / SETUP STAGE -----------------
 # Define data paths
@@ -90,7 +90,26 @@ if setup_needed:
 def load_screener():
     screener = BioSafeScreener(ref_fasta_path=REF_FASTA_PATH)
     if SKLEARN_AVAILABLE and os.path.exists(MODEL_PATH):
-        screener.load_model(MODEL_PATH)
+        try:
+            screener.load_model(MODEL_PATH)
+        except Exception as e:
+            # Pickle load failed due to scikit-learn version mismatch
+            # Remove the files and regenerate them using the active environment
+            if os.path.exists(MODEL_PATH):
+                try:
+                    os.remove(MODEL_PATH)
+                except:
+                    pass
+            if os.path.exists(REPORT_PATH):
+                try:
+                    os.remove(REPORT_PATH)
+                except:
+                    pass
+            # Programmatically rebuild the datasets and models
+            generate_dataset(output_dir=DATA_DIR)
+            run_eval_benchmark(data_dir=DATA_DIR)
+            # Load the fresh, compatible model
+            screener.load_model(MODEL_PATH)
     return screener
 
 @st.cache_data
