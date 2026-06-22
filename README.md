@@ -35,6 +35,8 @@ synscreen-eval/
 ├── adversary.py              # Adversarial sequence obfuscation simulators
 ├── screener.py               # 3-Tiered DNA screening pipeline (Exact, Local Align, ML)
 ├── evals.py                  # Training, testing, and evaluation benchmark runner
+├── red_team_agent.py         # Autonomous evaluation agent
+├── agent_report.md           # Generated safety report
 └── app.py                    # Interactive Streamlit application
 ```
 
