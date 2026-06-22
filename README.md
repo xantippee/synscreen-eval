@@ -112,11 +112,32 @@ Running evaluation cycle: seed=9
 === Safe Red-Team Leaderboard === 1. Seed=4 | Baseline=100% 2. Seed=7 | Baseline=100% Report written to agent_report.md Safe Red-Team Agent completed.
 
 ## 🔮 Future Work
-Autonomous benchmark generation
-LLM-assisted safety report generation
-Continuous monitoring across model versions
-Trend detection across evaluation cycles
-Agent-based experiment planning
-Interactive leaderboard dashboards
-Expanded synthetic sequence libraries
-Automated safety audit workflows
+
+### Adaptive Evaluation Agent
+
+Extend the Red Team Agent to automatically identify the weakest-performing screening scenario from previous evaluation runs and prioritize future synthetic test generation in those areas. For example, if chimeric sequence detection consistently underperforms baseline detection, the agent would generate additional synthetic chimeric test cases and measure whether screening improvements close the gap.
+
+### Detection Drift Monitoring
+
+Track screening performance across successive model versions and benchmark runs. Generate longitudinal reports showing changes in detection rates, false positive rates, and performance on codon-variant, fragmented, and chimeric synthetic sequences.
+
+### Functional Sequence Classification Analysis
+
+Expand the machine learning component to compare alternative feature representations, including amino-acid k-mers, protein embeddings, and transformer-based sequence encoders, using the same synthetic evaluation framework.
+
+### Automated Evaluation Reports
+
+Generate publication-style evaluation summaries that automatically describe benchmark results, identify statistically significant performance changes, and summarize screening strengths and limitations across all test scenarios.
+
+### Expanded Synthetic Benchmark Library
+
+Develop a larger collection of safe synthetic benchmark datasets containing diverse sequence lengths, codon usage profiles, GC-content distributions, and engineered sequence architectures to improve evaluation coverage.
+
+### Interactive Evaluation Dashboard
+
+Extend the Streamlit application with trend analysis, run-to-run comparisons, benchmark history tracking, and visual exploration of detection performance across multiple evaluation cycles.
+
+### Reproducible Screening Benchmark Suite
+
+Package the framework as a reusable benchmark suite that allows researchers to compare screening approaches using standardized synthetic datasets, evaluation metrics, and reporting workflows.
+
