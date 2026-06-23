@@ -190,7 +190,7 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 ---
 
-## 👤 Author
+## 👤 Author: Linda Polfus, PhD
 
 Built as part of the **Google AI Coding Intensive Capstone 2026** — Agent for Good track.
 
