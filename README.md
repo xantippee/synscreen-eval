@@ -1,10 +1,13 @@
 # BioGuard-Eval 🧬
 ### DNA Synthesis Screening · Multi-Agent Adversarial Simulation · MCP Server for AI Biosecurity
 
+[![Live Demo](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://synscreen-eval-fsimbjjowqjjnakrlb5zrj.streamlit.app/)
 [![Python 3.7+](https://img.shields.io/badge/python-3.7%2B-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/built%20with-Streamlit-ff4b4b.svg)](https://streamlit.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![AI Coding Capstone](https://img.shields.io/badge/Google%20AI%20Coding-Capstone%202026-orange.svg)]()
+
+> 🚀 **[Click here to launch the live app →](https://synscreen-eval-fsimbjjowqjjnakrlb5zrj.streamlit.app/)** — no installation required.
 
 **BioGuard-Eval** (also known as *SynScreen-Eval*) is a biological safety safeguard and automated adversarial evaluation framework. Built for the **Agent for Good** track of the AI Coding Intensive Capstone, it simulates a DNA synthesis screening pipeline — filtering biological threat agents — and deploys autonomous agents to stress-test these filters against codon optimization, sequence splitting, and chimeric insertion bypass techniques.
 
