@@ -43,18 +43,14 @@ synscreen-eval/
 ├── adversary.py              # Adversarial sequence obfuscation simulators
 ├── screener.py               # 3-Tiered DNA screening pipeline (Exact, Local Align, ML)
 ├── evals.py                  # Training, testing, and evaluation benchmark runner
-<<<<<<< HEAD
 ├── red_team_agent.py         # Autonomous evaluation agent
 ├── agent_report.md           # Generated safety report
 └── app.py                    # Interactive Streamlit application
-=======
 ├── red_team_agent.py         # Autonomous Red-Team evaluation agent
 ├── multi_agent_system.py     # Game-theoretic Defense vs Attack Agent simulation
 ├── mcp_server.py             # stdio Model Context Protocol (MCP) tool server
 ├── run_app.bat               # Double-clickable Windows runner
 └── app.py                    # Interactive Streamlit dashboard
->>>>>>> 3a8bdab (Update agents, README, add video script and capstone assets)
-```
 
 ---
 
@@ -92,15 +88,6 @@ python cli.py --red-team --seeds 5
 
 This project implements three key concepts covered in the course:
 
-<<<<<<< HEAD
-This framework stress-tests screening robustness using **automated capability evaluations (Evals)**, reporting performance metrics:
-
-1. **Exact Match (Tier 1)** works perfectly against unmodified sequences, but drops to **0% detection** under codon optimization since the nucleotide sequence is changed.
-2. **Homology Alignment (Tier 2)** detects codon-optimized threats but suffers a drop in detection if sequences are fragmented (Split Order Attack), as individual segments are too short to trigger length-based thresholds.
-3. **ML Classifier (Tier 3)** provides redunancy, classifying the functional class of the sequence regardless of heavy mutations or fragmentation.
-
- ## 🤖 Autonomous BioGuard Red Team Agent
-
 The repository includes a safe autonomous evaluation agent (red_team_agent.py) that repeatedly generates synthetic datasets, executes benchmark evaluations, analyzes outcomes, ranks performance, and produces structured reports.
 
 **Agent Workflow:**
@@ -134,7 +121,6 @@ The agent will:
 Starting Safe Red-Team Agent
 
 Running evaluation cycle: seed=0
-...
 Running evaluation cycle: seed=9
 
 === Safe Red-Team Leaderboard === 1. Seed=4 | Baseline=100% 2. Seed=7 | Baseline=100% Report written to agent_report.md Safe Red-Team Agent completed.
@@ -169,8 +155,6 @@ Extend the Streamlit application with trend analysis, run-to-run comparisons, be
 
 Package the framework as a reusable benchmark suite that allows researchers to compare screening approaches using standardized synthetic datasets, evaluation metrics, and reporting workflows.
 
-=======
 1.  **Agent & Multi-Agent Systems (ADK):** Exposes an adversarial game between a `DefenseAgent` (screener) and an `AttackAgent` (adversary). The agents negotiate thresholds dynamically, showcasing a structured reinforcement loop in `multi_agent_system.py`.
 2.  **Model Context Protocol (MCP) Server:** Implements a JSON-RPC stdio protocol server (`mcp_server.py`) that allows external LLMs to invoke biological safety checks as tools during generation.
 3.  **Security Features:** Implements a multi-tiered defense pipeline (local homology + ML classifier) with defensive engineering features like **graceful degradation** (if `scikit-learn` is missing, exact matching and local alignment remain operational) and **self-healing pickle loading** (re-compiling models on the fly in the event of package version mismatches).
->>>>>>> 3a8bdab (Update agents, README, add video script and capstone assets)
