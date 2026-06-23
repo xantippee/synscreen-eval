@@ -59,10 +59,17 @@ st.markdown("""
     }
     .tier-card {
         background-color: #1e293b;
+        color: #ffffff !important;
         padding: 1.2rem;
         border-radius: 0.4rem;
         border: 1px solid #334155;
         margin-bottom: 1rem;
+    }
+    .tier-card h4, .tier-card strong {
+        color: #ffffff !important;
+    }
+    .tier-card p {
+        color: #e2e8f0 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -153,8 +160,8 @@ st.sidebar.info("""
 """)
 
 # ----------------- MAIN CONTENT -----------------
-st.markdown("<div class='main-header'>BioGuard-Eval 🧬</div>", unsafe_style_html=True)
-st.markdown("<div class='sub-header'>DNA Synthesis Screening Pipeline & Adversarial Stress-Testing Dashboard</div>", unsafe_style_html=True)
+st.markdown("<div class='main-header'>BioGuard-Eval 🧬</div>", unsafe_allow_html=True)
+st.markdown("<div class='sub-header'>DNA Synthesis Screening Pipeline & Adversarial Stress-Testing Dashboard</div>", unsafe_allow_html=True)
 
 # Main warning banner for missing sklearn dependencies
 if not SKLEARN_AVAILABLE:
@@ -219,14 +226,14 @@ with tab1:
                     <h3>⚠️ Flagged / High Risk Order</h3>
                     <p>This DNA sequence matches biological control lists or exhibits sequence homology with regulated select agents/toxins.</p>
                 </div>
-                """, unsafe_style_html=True)
+                """, unsafe_allow_html=True)
             else:
                 st.markdown("""
                 <div class='status-box status-safe'>
                     <h3>✅ Cleared / Safe Order</h3>
                     <p>No matches to regulated pathogens or toxins detected. Suitable for synthesis order fulfillment.</p>
                 </div>
-                """, unsafe_style_html=True)
+                """, unsafe_allow_html=True)
                 
             col1, col2 = st.columns(2)
             
@@ -241,7 +248,7 @@ with tab1:
                     <p>Checks for exact matches of 18-mer nucleotides against select agent databases.</p>
                     <strong>Status: {t1_status}</strong>
                 </div>
-                """, unsafe_style_html=True)
+                """, unsafe_allow_html=True)
                 
                 # Tier 2 Card
                 t2_status = "🔴 Triggered" if report['tier2_flag'] else "🟢 Passed"
@@ -251,7 +258,7 @@ with tab1:
                     <p>Translates sequence to protein and aligns against threat reference library (Threshold: {match_thresh*100:.0f}% identity).</p>
                     <strong>Status: {t2_status}</strong> (Highest Local Identity: {report['highest_identity']*100:.1f}%)
                 </div>
-                """, unsafe_style_html=True)
+                """, unsafe_allow_html=True)
                 
                 # Tier 3 Card
                 t3_status = "🔴 Triggered" if report['tier3_flag'] else ("🟢 Passed" if SKLEARN_AVAILABLE else "⚪ Disabled")
@@ -262,7 +269,7 @@ with tab1:
                     <p>Analyses k-mer motifs in protein translation using Random Forest.</p>
                     <strong>Status: {t3_status}</strong> (Threat Probability: {prob_text})
                 </div>
-                """, unsafe_style_html=True)
+                """, unsafe_allow_html=True)
                 
             with col2:
                 st.subheader("Biological Annotations & Match Details")

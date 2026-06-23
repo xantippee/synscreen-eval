@@ -1,26 +1,32 @@
-# SynScreen-Eval 🧬
-### DNA Synthesis Screening & Adversarial Evaluation Framework
+# BioGuard-Eval 🧬
+### DNA Synthesis Screening, Multi-Agent Adversarial Simulation, and MCP Server for AI Biosecurity Safeguards
 
-**SynScreen-Eval** (also referred to as *BioGuard-Eval*) is a Python-based simulation of DNA synthesis screening and automated adversarial evaluations. It demonstrates how biosecurity safeguards screen gene orders to prevent the illicit synthesis of regulated pathogens/toxins, and evaluates the resilience of these screeners against sophisticated evasion tactics.
+**BioGuard-Eval** (also known as *SynScreen-Eval*) is a biological safety safeguard and automated adversarial evaluation framework. Built for the **Agent for Good** track of the AI Coding Intensive Capstone, it simulates a DNA synthesis screening pipeline (filtering biological threat agents) and utilizes autonomous agents to stress-test these filters against codon optimization, sequence splitting, and chimeric insertion bypasses.
 
-This project was built to showcase the intersection of **machine learning, bioinformatics, and biological safety safeguards (biosecurity)**.
+This project showcases the intersection of **computational biology, machine learning, and AI agent safety (red-teaming)**.
 
 ---
 
 ## 🌟 Key Features
 
-* **Multi-Tiered Screening Pipeline:**
-  * **Tier 1 (Exact Match):** Fast k-mer search ($k=18$) screening DNA against threat databases.
-  * **Tier 2 (Homology Local Alignment):** Translates query DNA to protein and runs the **Smith-Waterman algorithm** (written in pure Python) against threat targets to identify matches despite synonymous mutations.
-  * **Tier 3 (ML Functional Classifier):** Tokenizes amino acid sequences into overlapping 3-mers, vectorizes them via TF-IDF, and classifies sequences using a **Random Forest classifier** to detect functional threat signatures.
-* **Adversarial Obfuscation Simulator:**
-  * **Codon Optimization:** Mutates codons to maximize nucleotide sequence divergence while maintaining 100% amino acid identity (synonymous mutations).
-  * **Sequence Fragmentation:** Splits sequences into overlapping fragments to bypass length-based filters.
-  * **Chimeric Insertion:** Inserts threat sequences inside standard expression plasmids or benign backbones.
-* **Interactive Streamlit Web Dashboard:**
-  * Upload and screen custom DNA sequences.
-  * Run adversarial attacks in a live visual playground (side-by-side nucleotide comparisons with protein identity checks).
-  * View system-wide performance reports and evaluation charts (Plotly).
+*   **Multi-Tiered Screening Engine (`screener.py`):**
+    *   **Tier 1 (Exact Match):** Fast nucleotide $k$-mer matching ($k=18$) against control databases.
+    *   **Tier 2 (Homology Local Alignment):** Pure-Python **Smith-Waterman algorithm** running local alignments on translated protein sequences to catch codon-optimized threats.
+    *   **Tier 3 (ML Functional Classifier):** Extracting amino acid 3-mers via TF-IDF and classifying them using a **Random Forest classifier** to detect functional threat signatures under heavy mutation or fragmentation.
+*   **Adversarial Obfuscation Simulator (`adversary.py`):**
+    *   *Codon Optimization:* Synonym mutations maximizing DNA sequence divergence while maintaining 100% amino acid identity.
+    *   *Sequence Fragmentation:* Splitting DNA into overlapping segments to bypass length-based filters.
+    *   *Chimeric Insertion:* Embedding pathogen sequences inside benign plasmid vectors.
+*   **Multi-Agent Adversarial System (`multi_agent_system.py`):**
+    *   **`AttackAgent`:** Simulates a threat actor generating optimized sequence variations to bypass filters.
+    *   **`DefenseAgent`:** Dynamically tunes screener thresholds (alignment scores, ML thresholds) to maintain a False Positive Rate $<5\%$ while maximizing detection.
+    *   **`AdversarialOrchestrator`:** Moderates the iterative rounds and logs the security boundary (`multi_agent_report.md`).
+*   **Model Context Protocol (MCP) Server (`mcp_server.py`):**
+    *   Exposes screening and simulation tools as JSON-RPC 2.0 stdio tools, enabling client AI coding agents (like Cursor, Claude Desktop) to screen code and genomic outputs autonomously.
+*   **Command Line Interface (`cli.py`):**
+    *   Interactive terminal tools to screen sequences, run the Red-Team benchmark, or launch the multi-agent simulator.
+*   **Streamlit Web App Dashboard (`app.py`):**
+    *   Interactive screening portal, adversarial playground, and Plotly performance eval charts with built-in **self-healing** model regeneration.
 
 ---
 
@@ -28,43 +34,65 @@ This project was built to showcase the intersection of **machine learning, bioin
 
 ```text
 synscreen-eval/
-├── README.md                 # Professional repository documentation
+├── README.md                 # Professional repository landing page
 ├── requirements.txt          # Python dependencies
+├── capstone_writeup.md       # Full capstone project submission report
+├── cli.py                    # Command-line interface for the agent system
 ├── bio_utils.py              # DNA translation, FASTA parser, Smith-Waterman alignment
 ├── data_generator.py         # Synthetic, safe pathogen/benign dataset generator
 ├── adversary.py              # Adversarial sequence obfuscation simulators
 ├── screener.py               # 3-Tiered DNA screening pipeline (Exact, Local Align, ML)
 ├── evals.py                  # Training, testing, and evaluation benchmark runner
+<<<<<<< HEAD
 ├── red_team_agent.py         # Autonomous evaluation agent
 ├── agent_report.md           # Generated safety report
 └── app.py                    # Interactive Streamlit application
+=======
+├── red_team_agent.py         # Autonomous Red-Team evaluation agent
+├── multi_agent_system.py     # Game-theoretic Defense vs Attack Agent simulation
+├── mcp_server.py             # stdio Model Context Protocol (MCP) tool server
+├── run_app.bat               # Double-clickable Windows runner
+└── app.py                    # Interactive Streamlit dashboard
+>>>>>>> 3a8bdab (Update agents, README, add video script and capstone assets)
 ```
 
 ---
 
-## 🛠️ Setup & Local Run Instructions
+## 🛠️ Installation & Quick Start
 
 ### 1. Install Dependencies
-Make sure you have Python 3.5+ installed. Install the requirements:
+Ensure you have Python 3.5+ installed. Run:
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Run the App
-Launch the Streamlit dashboard:
+### 2. Run the Streamlit Dashboard (Easiest)
+If on Windows, you can simply **double-click the `run_app.bat` file** in your file explorer. Alternatively, execute:
 ```bash
 streamlit run app.py
 ```
+*Note: On first startup, the app will automatically generate mock datasets, train the Random Forest model, and compile evaluations.*
 
-> [!NOTE]
-> **Autobuild:** On first launch, the application will automatically check if the mock sequence datasets and machine learning models are present. If missing, it will programmatically generate the safe training data, train the Random Forest classifier, run the evaluation benchmark, and render the dashboard.
+### 3. Run the CLI Tool
+Examine sequence safety, run the Red-Team evaluator, or run the multi-agent simulation from the terminal:
+```bash
+# Screen a DNA sequence
+python cli.py --screen ATGGGGGGGGTGTTTATTTTGGTTGCTTTGATTTTGCAATCGTTTGGACAAGATATTTTGGTTACATCG
+
+# Run the Multi-Agent Defense vs Attack simulation
+python cli.py --multi-agent
+
+# Run the autonomous Red-Team Agent benchmark
+python cli.py --red-team --seeds 5
+```
 
 ---
 
-## 📊 How the Evals Work
+## 🧬 Capstone Concepts Demonstrated
 
-Biosecurity guidelines (such as the *Guidance for Providers of Synthetic Double-Stranded DNA*) require screening systems to identify select agents. However, adversaries try to bypass simple filters.
+This project implements three key concepts covered in the course:
 
+<<<<<<< HEAD
 This framework stress-tests screening robustness using **automated capability evaluations (Evals)**, reporting performance metrics:
 
 1. **Exact Match (Tier 1)** works perfectly against unmodified sequences, but drops to **0% detection** under codon optimization since the nucleotide sequence is changed.
@@ -141,3 +169,8 @@ Extend the Streamlit application with trend analysis, run-to-run comparisons, be
 
 Package the framework as a reusable benchmark suite that allows researchers to compare screening approaches using standardized synthetic datasets, evaluation metrics, and reporting workflows.
 
+=======
+1.  **Agent & Multi-Agent Systems (ADK):** Exposes an adversarial game between a `DefenseAgent` (screener) and an `AttackAgent` (adversary). The agents negotiate thresholds dynamically, showcasing a structured reinforcement loop in `multi_agent_system.py`.
+2.  **Model Context Protocol (MCP) Server:** Implements a JSON-RPC stdio protocol server (`mcp_server.py`) that allows external LLMs to invoke biological safety checks as tools during generation.
+3.  **Security Features:** Implements a multi-tiered defense pipeline (local homology + ML classifier) with defensive engineering features like **graceful degradation** (if `scikit-learn` is missing, exact matching and local alignment remain operational) and **self-healing pickle loading** (re-compiling models on the fly in the event of package version mismatches).
+>>>>>>> 3a8bdab (Update agents, README, add video script and capstone assets)
