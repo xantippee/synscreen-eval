@@ -1,1 +1,499 @@
-{"metadata":{"kernelspec":{"language":"python","display_name":"Python 3","name":"python3"},"language_info":{"name":"python","version":"3.6.6","mimetype":"text/x-python","codemirror_mode":{"name":"ipython","version":3},"pygments_lexer":"ipython3","nbconvert_exporter":"python","file_extension":".py"},"kaggle":{"accelerator":"none","dataSources":[],"dockerImageVersionId":28755,"isInternetEnabled":false,"language":"python","sourceType":"notebook","isGpuEnabled":false}},"nbformat_minor":4,"nbformat":4,"cells":[{"cell_type":"markdown","source":"# Guardians of the Synthetic Code: A Multi-Agent Adversarial Framework and MCP Server for AI Biosecurity Safeguards\n\n**Track:** Agent for Good  \n**Project:** BioGuard-Eval (DNA Synthesis Screening & Adversarial Evals Framework)  \n**Author:** Linda Polfus, PhD - Google Kaggle: AI Coding Intensive Capstone Submission, June 2026\n**Github repo:** https://github.com/xantippee/synscreen-eval\n**Streamlit app:** https://synscreen-eval-fsimbjjowqjjnakrlb5zrj.streamlit.app/\n\n---\n\n## Executive Summary\n\nThe convergence of artificial intelligence and synthetic biology holds the promise of revolutionary breakthroughs in medicine, agriculture, and materials science. However, this same convergence introduces unprecedented dual-use risks. Frontier AI models are increasingly capable of designing novel proteins, optimizing viral genomes, and providing step-by-step instructions for synthesizing regulated biological agents. \n\nTo prevent these technologies from being misused by sophisticated actors, the biosecurity community relies on **DNA Synthesis Screening**—a process where commercial DNA manufacturers screen incoming orders against databases of known pathogens and toxins before synthesizing the physical double-stranded DNA.\n\n**BioGuard-Eval** is a complete, self-contained biosecurity evaluation framework that simulates this screening pipeline and tests its resilience against adversarial evasion tactics. It demonstrates what responsible AI safety looks like in the biological domain by combining bioinformatics, machine learning, and agentic design. \n\nIn this submission, we detail the implementation of three key concepts covered in this course:\n1. **Agent & Multi-Agent Systems (ADK):** An adversarial optimization game between a `DefenseAgent` (managing security filters) and an `AttackAgent` (simulating a biological threat actor).\n2. **Model Context Protocol (MCP) Server:** Exposing biosecurity firewalls directly to LLM agents as toolsets, preventing AI models from generating unsafe genetic sequences.\n3. **Security Features & Guardrails:** Implementing a robust multi-tiered validation pipeline (exact matching, protein local alignment, and NLP-based ML classifiers) with graceful degradation to protect against sequence obfuscation.\n\n---\n\n## 1. The Core Challenge: Biosecurity in the Age of Frontier Models\n\nTo understand the value of BioGuard-Eval, we must first look at how synthetic biology operates in the real world. Today, biological researchers rarely synthesize DNA by hand in a laboratory. Instead, they design a genetic sequence on a computer and submit the digital file (usually in a format called FASTA) to a DNA synthesis company (like Twist Bioscience or Integrated DNA Technologies). The company prints the physical DNA molecules and ships them to the laboratory.\n\nTo prevent malicious actors from ordering genetic blueprints for dangerous pathogens (such as Ebola, Smallpox, or Ricin toxin), national and international frameworks—like the **US Select Agent Regulations** and the **Australia Group Guidelines**—require DNA synthesis providers to screen all orders.\n\n### The Evasion Problem\nTraditional screening relies on simple alignment algorithms (like BLAST) to match the customer's ordered DNA sequence against a database of regulated threat agents. If a sequence matches a pathogen with high similarity, the order is flagged for human review.\n\nHowever, a sophisticated adversary can easily bypass these simple sequence-matching filters using three primary evasion strategies:\n1. **Codon Optimization (Synonymous Mutations):** Mutating the DNA sequence without altering the resulting protein.\n2. **Sequence Fragmentation (Split Attacks):** Splitting the target sequence into multiple smaller parts across multiple orders or companies, to be assembled later in the lab.\n3. **Chimeric Insertion (Trojan Horse):** Hiding the dangerous sequence inside a larger, harmless bacterial vector or plasmid.\n\nPrior to BioGuard-Eval, testing these systems required manual, ad-hoc sequence design. Our project automates this testing, creating a standardized \"Red-Teaming\" evaluation framework for biological safeguards.\n\n---\n\n## 2. Accessible Genetics: Explaining DNA Evasion via Analogies\n\nFor judges and stakeholders without a background in genetics, biological sequences can look like an intimidating alphabet soup of `A`, `G`, `C`, and `T` (nucleotides) or amino acids. To bridge this gap, we can explain the three core evasion strategies using simple, real-world analogies.\n\n### Analogy 1: Codon Optimization as \"Changing the Font & Spelling\"\nThink of a protein sequence as a **cooking recipe** (e.g., \"Bake a cake at 350 degrees\"). The DNA sequence is the **written text** of that recipe. \n\nIn genetics, multiple different DNA triplets (called codons) translate into the exact same amino acid. This is known as the redundancy of the genetic code. \n\nIf a traditional scanner looks only for the exact phrase \"Bake a cake at 350 degrees\", an adversary can rewrite the recipe using synonyms and different spellings: *\"Prepare the dessert in the oven heated to three-hundred and fifty degrees.\"* \n\nTo a human reader (and to the ribosome translating the DNA in a cell), the instructions are identical: a cake is baked. But to a simple text matcher looking for the exact baseline phrase, the query appears completely clean. This is **Codon Optimization**.\n\n### Analogy 2: Sequence Fragmentation as \"The IKEA Flat-Pack\"\nImagine you are trying to ship a locked, illegal safe through custom controls. If you ship the safe fully assembled, the scanners immediately detect its shape and flag it.\n\nInstead, you take the safe apart, packaging the steel walls, screws, and lock mechanism into three separate boxes, shipping them on different days or using different shipping accounts. \n\nNone of the individual boxes contain a complete safe; they only contain generic-looking flat metal plates and hardware. Once all three boxes arrive at your house, you assemble them into the functional safe. \n\nIn DNA synthesis, this is a **Split Attack**. The adversary splits the gene into three short DNA fragments (each below the length threshold of the screener) and uses overlapping ends (Gibson Assembly) to stitch them together inside their lab.\n\n### Analogy 3: Chimeric Insertion as \"The Trojan Horse\"\nImagine trying to smuggle a single page of top-secret instructions past a security guard. If you carry the single page, it is highly conspicuous. \n\nInstead, you take a 1,000-page book of classic literature (a benign carrier) and bind your secret page directly into the middle of the book (at page 500). \n\nThe security guard scans the cover, flips through the first few pages of Shakespeare, and clears the book. \n\nIn biology, this is a **Chimeric Insert**. The actor inserts the pathogen gene directly into the middle of a harmless bacterial plasmid (an circular DNA vector used routinely in labs). The screener, looking at the sequence-level metadata, might classify it as a standard cloning vector and clear the order.\n\n---\n\n## 3. The BioGuard-Eval Screening Architecture\n\nTo defend against these three evasion methods, BioGuard-Eval implements a **Multi-Tiered Screening Engine** (written in pure Python for high portability and zero dependencies):\n\n```mermaid\ngraph TD\n    Seq[Query DNA Sequence] --> T1[Tier 1: DNA Exact Match]\n    Seq --> T2[Translate to Protein]\n    T2 --> T3[Tier 2: Smith-Waterman Alignment]\n    T2 --> T4[Tier 3: ML Random Forest Classifier]\n    \n    T1 -- Flagged? --/ Yes --> Block[Block Order]\n    T3 -- Identity >= Thresh? --/ Yes --> Block\n    T4 -- Probability >= Thresh? --/ Yes --> Block\n    \n    T1 -- No --> Check2{All Passed?}\n    T3 -- No --> Check2\n    T4 -- No --> Check2\n    \n    Check2 -- Yes --> Clear[Clear Order]\n```\n\n### Tier 1: DNA Exact Match (The Speed Filter)\nScreens for exact k-mer matching ($k=18$) against the threat reference database. It represents a fast, low-compute filter to catch unmodified threats instantly.\n\n### Tier 2: Homology Alignment (The Protein translation Filter)\nTranslates the query DNA into a protein sequence. Because the genetic code is redundant, the protein sequence remains conserved even if the DNA nucleotides are heavily mutated (codon optimized). \n\nWe implemented the **Smith-Waterman local alignment algorithm** from scratch in pure Python. It compares the translated query protein against the threat database, calculating local sequence identity. Even if the DNA sequence similarity drops to 50% due to synonymous mutations, the protein alignment identity remains at 100%, triggering the Tier 2 flag.\n\n### Tier 3: Machine Learning Sequence Classifier (The Redundant Defense)\nWhat if the sequence is split into short fragments, or mutated just enough to drop below the alignment identity threshold? \n\nTier 3 utilizes a Natural Language Processing (NLP) approach to genomics. We convert the translated protein sequence into overlapping 3-mer amino acid \"words\" (e.g., `\"MGG GGV GVF\"`). We pass these documents through a **TF-IDF Vectorizer** and train a **Random Forest Classifier** to predict the probability that the sequence belongs to a regulated pathogen family. \n\nBecause Random Forest looks at the overall distribution of k-mer features across the entire sequence rather than contiguous alignment segments, it serves as a highly robust backstop to capture fragmented or highly engineered sequence designs.\n\n---\n\n## 4. Key Concept 1: Agent & Multi-Agent Systems (ADK)\n\nA core learning objective of the course is the design of agentic loops and multi-agent systems. In `multi_agent_system.py`, we implement a game-theoretic evaluation loop featuring two specialized agents: the **Defense Agent** and the **Attack Agent**, coordinated by an **Adversarial Orchestrator**.\n\n```mermaid\nsequenceDiagram\n    autonumber\n    actor Orchestrator as Orchestrator Agent\n    participant Defense as Defense Agent (Screener)\n    participant Attack as Attack Agent (Adversary)\n    \n    rect rgb(240, 240, 240)\n        note right of Orchestrator: Round 1: Baseline Attack\n        Orchestrator->>Attack: Generate baseline sequence\n        Attack->>Orchestrator: Unmodified threat DNA\n        Orchestrator->>Defense: Set initial thresholds & Screen\n        Defense->>Orchestrator: Flagged (Tier 1 Match)\n        Orchestrator->>Defense: Adapt policy based on outcome\n    end\n    \n    rect rgb(230, 240, 255)\n        note right of Orchestrator: Round 2: Codon Optimization\n        Orchestrator->>Attack: Generate codon-optimized sequence\n        Attack->>Orchestrator: Synonymous mutated DNA\n        Orchestrator->>Defense: Screen with current policy\n        Defense->>Orchestrator: Flagged (Tier 2 Alignment)\n        Orchestrator->>Defense: Adapt policy based on outcome\n    end\n    \n    rect rgb(255, 240, 240)\n        note right of Orchestrator: Round 3: Split Attack\n        Orchestrator->>Attack: Generate split sequences\n        Attack->>Orchestrator: 3 DNA fragments (under length limit)\n        Orchestrator->>Defense: Screen with current policy\n        Defense->>Orchestrator: Evaluates: Tier 1/2 Passed, Tier 3 Flagged!\n        Orchestrator->>Defense: Tighten thresholds if bypass detected\n    end\n```\n\n### The Multi-Agent Game\nThe simulation operates over sequential rounds:\n1. **The Attack Agent** starts with a baseline strategy, delivering direct sequences.\n2. **The Defense Agent** screens them and evaluates false-positive rates on a benign dataset.\n3. In subsequent rounds, the **Attack Agent** adapts its strategy, generating codon-optimized, split, and chimeric DNA sequences to try and find holes in the screener.\n4. The **Defense Agent** monitors the bypass rates. If the Attack Agent successfully bypasses the screener, or if the false positive rate on benign research exceeds 5%, the Defense Agent dynamically adjusts its screening parameters:\n   * **If False Positive Rate > 5%:** Loosens thresholds (`match_threshold` and `ml_threshold` increase) to avoid blocking legitimate research orders.\n   * **If Detection Rate < 95%:** Tightens thresholds (`match_threshold` and `ml_threshold` decrease) to enforce stricter security boundaries.\n   \nThe Orchestrator logs this agentic feedback loop and outputs `multi_agent_report.md`. This represents a concrete demonstration of multi-agent collaboration and competition to find the safety boundary of a software system.\n\n---\n\n## 5. Key Concept 2: Model Context Protocol (MCP) Server\n\nExposing capability evaluations is only half of the biosecurity equation. How do we ensure that AI developers and automated coding agents (like Cursor or Claude) don't write dangerous biological sequences in the first place?\n\nWe solved this by implementing a **Model Context Protocol (MCP) Server** (`mcp_server.py`). \n\n### Why MCP for Biosecurity?\nThe Model Context Protocol (developed by Anthropic) allows LLM clients to securely connect to external tools and data sources. By exposing our biosecurity screening pipeline as an MCP server, any coding agent or AI model can query the screener *before* outputting genomic coordinates or code templates to a user.\n\nOur `mcp_server.py` communicates over standard input/output (stdio) using JSON-RPC 2.0. It requires no external dependencies and exposes four critical tools to the AI client:\n1. `screen_dna_sequence`: Allows the LLM to verify if a DNA sequence is safe or represents a select agent.\n2. `simulate_evasion_attack`: Allows the LLM to run codon optimization or splitting attacks to test sequences.\n3. `run_red_team_eval`: Triggers the autonomous Red-Team Agent benchmark across multiple seeds.\n4. `run_multi_agent_simulation`: Triggers the adversarial simulation between the Defense and Attack Agents.\n\n### Sample MCP JSON-RPC Exchange\nWhen an LLM client queries the server to list tools, the server responds with the schema for our screening tool:\n\n```json\n{\n  \"jsonrpc\": \"2.0\",\n  \"result\": {\n    \"tools\": [\n      {\n        \"name\": \"screen_dna_sequence\",\n        \"description\": \"Screens a DNA nucleotide sequence against biological control lists to detect pathogen threats.\",\n        \"inputSchema\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"dna_sequence\": {\n              \"type\": \"string\",\n              \"description\": \"The raw DNA sequence (A, C, G, T) to screen.\"\n            }\n          },\n          \"required\": [\"dna_sequence\"]\n        }\n      }\n    ]\n  },\n  \"id\": 1\n}\n```\n\nBy integrating this server, AI platforms can run a local \"biosecurity guardrail\" that screens generated DNA sequences in real-time, functioning as an automated firewall for synthetic biology.\n\n---\n\n## 6. Key Concept 3: Security Features & Guardrails\n\nBioGuard-Eval is built with software security best practices in mind, demonstrating how to harden biological pipelines against edge cases and environment issues:\n\n### 1. Graceful Degradation (Dependency Sanitization)\nGenomics software often relies on heavy, complex libraries (like BioPython or scikit-learn) which can fail to load or be missing in minimal environments. \nIn `screener.py` and `evals.py`, we implemented a strict dependency check:\n```python\ntry:\n    from sklearn.feature_extraction.text import TfidfVectorizer\n    from sklearn.ensemble import RandomForestClassifier\n    SKLEARN_AVAILABLE = True\nexcept ImportError:\n    SKLEARN_AVAILABLE = False\n```\nIf `scikit-learn` is missing, the screening pipeline **does not crash**. Instead, it gracefully disables Tier 3 (ML), displays a clear warning in the Streamlit UI, and continues running Tiers 1 & 2 (Exact matching and local alignment) at full performance.\n\n### 2. Self-Healing Model Loading\nDuring development, we discovered that `pickle.load` throws serialization errors if a model is trained under one version of `scikit-learn` and loaded under a different version.\nTo prevent the application from crashing on start-up due to environment version mismatches, we implemented a **self-healing model loader** in `app.py`:\n```python\ntry:\n    screener.load_model(MODEL_PATH)\nexcept Exception as e:\n    # Remove mismatched pickle and report files\n    os.remove(MODEL_PATH)\n    os.remove(REPORT_PATH)\n    # Rebuild data and models in the active environment context\n    generate_dataset(output_dir=DATA_DIR)\n    run_eval_benchmark(data_dir=DATA_DIR)\n    screener.load_model(MODEL_PATH)\n```\nIf loading fails, the app automatically deletes the mismatched files, regenerates the dataset, retrains the Random Forest model using the *current* environment's library version, and successfully starts the app—completely transparently to the user.\n\n---\n\n## 7. Simulation Results & Safety Boundary Analysis\n\nRunning our benchmark on the test dataset yields fascinating insights into the safety boundaries of DNA screening systems:\n\n| Attack Vector | Tier 1 (Exact Match) | Tier 2 (Homology Local) | Tier 3 (ML Classifier) | Combined Screener Action |\n|---|---|---|---|---|\n| **Baseline Threats** | 🔴 Triggered (100%) | 🔴 Triggered (100%) | 🔴 Triggered (100%) | **🔴 blocked (100%)** |\n| **Codon-Optimized** | 🟢 Passed (0%) | 🔴 Triggered (100%) | 🔴 Triggered (100%) | **🔴 blocked (100%)** |\n| **Sequence Splits** | 🟢 Passed (0%) | 🟢 Passed (0%) | 🔴 Triggered (100%) | **🔴 blocked (100%)** |\n| **Chimeric Inserts** | 🟢 Passed (0%) | 🔴 Triggered (77.4%) | 🔴 Triggered (77.4%) | **🔴 blocked (77.4%)** |\n\n### Insights:\n* **The Vulnerability of Tier 1:** Exact matching is completely blind to codon optimization. A 100% codon-optimized sequence results in 0% detection by Tier 1.\n* **The Vulnerability of Tier 2:** Homology local alignment catches codon optimization but can be bypassed if the sequence is split into multiple fragments that are too short to generate a high alignment score.\n* **The Redundancy of Tier 3:** The NLP machine learning model successfully identifies split fragments because it looks at k-mer distributions across the sequence rather than contiguous local alignments.\n* **The Chimeric Escape:** Chimeric insertions are the most difficult to detect, achieving a 22.6% bypass rate in our simulation. This highlights the need for advanced screening algorithms that perform local alignment across multiple overlapping windows.\n\n---\n\n## 8. Conclusion & The \"Agent for Good\" Vision\n\nBioGuard-Eval represents a significant step forward for the **Agent for Good** track. It takes complex biological and biosecurity concepts—often locked behind proprietary databases and academic walls—and translates them into a simple, open-source, interactive evaluation framework. \n\nBy demonstrating how **Multi-Agent Systems** can map vulnerabilities and how **Model Context Protocol Servers** can integrate biosecurity guardrails into LLM workflows, this project shows how we can build concrete safety systems to protect against the misuse of biological technologies. \n\nUltimately, BioGuard-Eval ensures that the power of AI to accelerate scientific discovery is balanced by a rigorous, automated defense of our global biological safety boundary.\n","metadata":{"_uuid":"8f2839f25d086af736a60e9eeb907d3b93b6e0e5","_cell_guid":"b1076dfc-b9ad-4769-8c92-a6c4dae69d19"}},{"cell_type":"markdown","source":"","metadata":{}},{"cell_type":"markdown","source":"","metadata":{}}]}
+import streamlit as st
+import os
+import json
+import pandas as pd
+import numpy as np
+import plotly.graph_objects as go
+import plotly.express as px
+
+# Import our custom modules
+from bio_utils import translate_dna, smith_waterman, read_fasta
+from data_generator import generate_dataset, TEMPLATES
+from adversary import obfuscate_codon_optimization, obfuscate_split_sequence, obfuscate_chimeric_insert
+from screener import BioSafeScreener, SKLEARN_AVAILABLE
+from evals import run_eval_benchmark
+
+# Page styling & Configuration
+st.set_page_config(
+    page_title="BioGuard-Eval | DNA Synthesis Screening & Evals",
+    page_icon="🧬",
+    layout="wide"
+)
+
+# Custom CSS for premium aesthetics
+st.markdown("""
+<style>
+    .reportview-container {
+        background: #0e1117;
+    }
+    .main-header {
+        font-family: 'Outfit', 'Inter', sans-serif;
+        color: #ffffff;
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0.5rem;
+    }
+    .sub-header {
+        color: #8892b0;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+    .status-box {
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        margin-bottom: 1.5rem;
+        border-left: 5px solid;
+    }
+    .status-flagged {
+        background-color: rgba(255, 75, 75, 0.1);
+        border-left-color: #ff4b4b;
+        color: #ff4b4b;
+    }
+    .status-safe {
+        background-color: rgba(9, 171, 59, 0.1);
+        border-left-color: #09ab3b;
+        color: #09ab3b;
+    }
+    .tier-card {
+        background-color: #1e293b;
+        color: #ffffff !important;
+        padding: 1.2rem;
+        border-radius: 0.4rem;
+        border: 1px solid #334155;
+        margin-bottom: 1rem;
+    }
+    .tier-card h4, .tier-card strong {
+        color: #ffffff !important;
+    }
+    .tier-card p {
+        color: #e2e8f0 !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# ----------------- DATA / SETUP STAGE -----------------
+# Define data paths
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(SCRIPT_DIR, "data")
+MODEL_PATH = os.path.join(DATA_DIR, "screener_model.pkl")
+REPORT_PATH = os.path.join(DATA_DIR, "evaluation_report.json")
+REF_FASTA_PATH = os.path.join(DATA_DIR, "regulated_threats_ref.fasta")
+
+# Automatic setup if files are missing
+setup_needed = not os.path.exists(REPORT_PATH) or (SKLEARN_AVAILABLE and not os.path.exists(MODEL_PATH))
+
+if setup_needed:
+    st.info("🧬 First-time setup: Generating synthetic datasets, training ML classifier, and running evaluation benchmarks...")
+    with st.spinner("Processing biological datasets..."):
+        generate_dataset(output_dir=DATA_DIR)
+        run_eval_benchmark(data_dir=DATA_DIR)
+    st.success("Setup complete!")
+
+# Load Screener and Benchmark Report
+@st.cache_resource
+def load_screener():
+    screener = BioSafeScreener(ref_fasta_path=REF_FASTA_PATH)
+    if SKLEARN_AVAILABLE and os.path.exists(MODEL_PATH):
+        try:
+            screener.load_model(MODEL_PATH)
+        except Exception as e:
+            # Pickle load failed due to scikit-learn version mismatch
+            # Remove the files and regenerate them using the active environment
+            if os.path.exists(MODEL_PATH):
+                try:
+                    os.remove(MODEL_PATH)
+                except:
+                    pass
+            if os.path.exists(REPORT_PATH):
+                try:
+                    os.remove(REPORT_PATH)
+                except:
+                    pass
+            # Programmatically rebuild the datasets and models
+            generate_dataset(output_dir=DATA_DIR)
+            run_eval_benchmark(data_dir=DATA_DIR)
+            # Load the fresh, compatible model
+            screener.load_model(MODEL_PATH)
+    return screener
+
+@st.cache_data
+def load_report():
+    with open(REPORT_PATH, 'r') as f:
+        return json.load(f)
+
+screener = load_screener()
+report_data = load_report()
+
+# ----------------- SIDEBAR CONFIG -----------------
+st.sidebar.image("https://img.icons8.com/external-flatart-icons-outline-flatarticons/128/external-dna-science-flatart-icons-outline-flatarticons.png", width=80)
+st.sidebar.markdown("### BioGuard-Eval")
+st.sidebar.markdown("DNA Synthesis Screening & Adversarial Evals Framework.")
+
+if not SKLEARN_AVAILABLE:
+    st.sidebar.warning("⚠️ **ML Features Disabled:** `scikit-learn` is not installed in the active environment. Tier 3 classifier is disabled.")
+
+st.sidebar.markdown("---")
+st.sidebar.markdown("### Screener Thresholds")
+match_thresh = st.sidebar.slider(
+    "Tier 2 Homology Threshold (Protein Identity)", 
+    min_value=0.50, max_value=1.00, value=screener.match_threshold, step=0.05
+)
+
+if SKLEARN_AVAILABLE:
+    ml_thresh = st.sidebar.slider(
+        "Tier 3 ML Probability Threshold", 
+        min_value=0.10, max_value=0.90, value=screener.ml_threshold, step=0.05
+    )
+    screener.ml_threshold = ml_thresh
+
+# Apply dynamic threshold adjustments to the cached screener
+screener.match_threshold = match_thresh
+
+st.sidebar.markdown("---")
+st.sidebar.markdown("### Biosecurity Frameworks")
+st.sidebar.info("""
+* **Australia Group List:** Coordinates export controls on pathogens and toxins.
+* **DNA Synthesis Guidance:** Requires providers to screen sequences to verify orders are legitimate and prevent illicit assembly of pathogens.
+""")
+
+# ----------------- MAIN CONTENT -----------------
+st.markdown("<div class='main-header'>BioGuard-Eval 🧬</div>", unsafe_allow_html=True)
+st.markdown("<div class='sub-header'>DNA Synthesis Screening Pipeline & Adversarial Stress-Testing Dashboard</div>", unsafe_allow_html=True)
+
+# Main warning banner for missing sklearn dependencies
+if not SKLEARN_AVAILABLE:
+    st.warning("⚠️ **Notice:** `scikit-learn` is missing from your Python environment. The screening engine has gracefully degraded: Tier 1 (Exact Match) and Tier 2 (Smith-Waterman Alignment) remain fully functional, but Tier 3 (ML Classification) is disabled. Run `pip install scikit-learn` to enable ML features.")
+
+tab1, tab2, tab3 = st.tabs([
+    "🔍 Sequence Screening Portal", 
+    "🧪 Adversarial Simulation Lab", 
+    "📊 System Evals & Benchmarks"
+])
+
+# ----------------- TAB 1: SCREENER PORTAL -----------------
+with tab1:
+    st.header("Upload or Paste Sequence to Screen")
+    st.write("Input a nucleotide sequence to test against the 3-tiered biosecurity screening pipeline.")
+    
+    # Preloaded examples
+    preset_opt = st.selectbox(
+        "Load Preset Sequence:",
+        ["-- Paste or Custom --", "Benign Reporter (GFP)", "Regulated Glycoprotein Variant (Threat)", "Codon-Optimized Threat (Adversarial Bypass Target)"]
+    )
+    
+    default_text = ""
+    if preset_opt == "Benign Reporter (GFP)":
+        from data_generator import reverse_translate
+        default_text = ">BENIGN_GFP_EXPRESSION_VECTOR\n" + reverse_translate(TEMPLATES["benign_reporter_gfp"], use_bias=True, seed=42)
+    elif preset_opt == "Regulated Glycoprotein Variant (Threat)":
+        from data_generator import reverse_translate
+        from data_generator import mutate_protein_sequence
+        mutated_pep = mutate_protein_sequence(TEMPLATES["threat_viral_glycoprotein"], mutation_rate=0.04, seed=12)
+        default_text = ">REGULATED_PATHOGEN_SURFACE_GLYCOPROTEIN\n" + reverse_translate(mutated_pep, use_bias=True, seed=12)
+    elif preset_opt == "Codon-Optimized Threat (Adversarial Bypass Target)":
+        from data_generator import reverse_translate
+        original_dna = reverse_translate(TEMPLATES["threat_biological_toxin"], use_bias=True, seed=99)
+        obfuscated_dna = obfuscate_codon_optimization(original_dna, seed=99)
+        default_text = ">CODON_OPTIMIZED_REGULATED_TOXIN\n" + obfuscated_dna
+
+    seq_input = st.text_area("Sequence FASTA (DNA/Nucleotide):", value=default_text, height=180)
+    
+    if st.button("Run DNA Synthesis Screen"):
+        if seq_input.strip() == "":
+            st.warning("Please enter a DNA sequence.")
+        else:
+            lines = seq_input.strip().split('\n')
+            query_dna = ""
+            header = "Query Sequence"
+            if lines[0].startswith('>'):
+                header = lines[0][1:]
+                query_dna = "".join(lines[1:])
+            else:
+                query_dna = "".join(lines)
+                
+            query_dna = query_dna.replace(" ", "").replace("\r", "")
+            
+            with st.spinner("Analyzing sequence signature..."):
+                report = screener.screen_sequence(query_dna)
+                
+            # Render Screening Banner
+            if report['flagged']:
+                st.markdown("""
+                <div class='status-box status-flagged'>
+                    <h3>⚠️ Flagged / High Risk Order</h3>
+                    <p>This DNA sequence matches biological control lists or exhibits sequence homology with regulated select agents/toxins.</p>
+                </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.markdown("""
+                <div class='status-box status-safe'>
+                    <h3>✅ Cleared / Safe Order</h3>
+                    <p>No matches to regulated pathogens or toxins detected. Suitable for synthesis order fulfillment.</p>
+                </div>
+                """, unsafe_allow_html=True)
+                
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.subheader("Screener Tier Flags")
+                
+                # Tier 1 Card
+                t1_status = "🔴 Triggered" if report['tier1_flag'] else "🟢 Passed"
+                st.markdown(f"""
+                <div class='tier-card'>
+                    <h4>Tier 1: DNA Exact Match</h4>
+                    <p>Checks for exact matches of 18-mer nucleotides against select agent databases.</p>
+                    <strong>Status: {t1_status}</strong>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                # Tier 2 Card
+                t2_status = "🔴 Triggered" if report['tier2_flag'] else "🟢 Passed"
+                st.markdown(f"""
+                <div class='tier-card'>
+                    <h4>Tier 2: Translated Protein Homology</h4>
+                    <p>Translates sequence to protein and aligns against threat reference library (Threshold: {match_thresh*100:.0f}% identity).</p>
+                    <strong>Status: {t2_status}</strong> (Highest Local Identity: {report['highest_identity']*100:.1f}%)
+                </div>
+                """, unsafe_allow_html=True)
+                
+                # Tier 3 Card
+                t3_status = "🔴 Triggered" if report['tier3_flag'] else ("🟢 Passed" if SKLEARN_AVAILABLE else "⚪ Disabled")
+                prob_text = "{:.1f}%".format(report['tier3_prob']*100) if SKLEARN_AVAILABLE else "N/A"
+                st.markdown(f"""
+                <div class='tier-card'>
+                    <h4>Tier 3: ML Functional Classifier</h4>
+                    <p>Analyses k-mer motifs in protein translation using Random Forest.</p>
+                    <strong>Status: {t3_status}</strong> (Threat Probability: {prob_text})
+                </div>
+                """, unsafe_allow_html=True)
+                
+            with col2:
+                st.subheader("Biological Annotations & Match Details")
+                if report['flagged']:
+                    st.write("**Sequence ID:**", header)
+                    st.write("**Sequence Length:**", "{} nt ({} aa)".format(report['query_length_nt'], report['query_length_aa']))
+                    
+                    if report['best_match_ref_id']:
+                        st.write("**Matched Reference ID:**", report['best_match_ref_id'])
+                        st.write("**Pathogen Classification:**", report['best_match_desc'])
+                        
+                    st.write("**Analysis & Context:**")
+                    if report['tier1_flag']:
+                        st.info("Exact match was triggered on a segment of DNA. This indicates high nucleotide homology to a known threat agent.")
+                    elif report['tier2_flag']:
+                        st.warning("Tier 2 was triggered by local amino acid alignment. This indicates the query protein sequence matches a regulated pathogen family, although the nucleotide sequence may have been heavily modified (codon optimized).")
+                    if report['tier3_flag']:
+                        st.error("ML model classified this sequence as a high-risk pathogen family: **{}**".format(report['ml_flag_reason']))
+                else:
+                    st.write("Sequence checked successfully. Length: {} nt. No significant biological matches found.".format(report['query_length_nt']))
+                    st.balloons()
+
+# ----------------- TAB 2: ADVERSARIAL PLAYGROUND -----------------
+with tab2:
+    st.header("Adversarial Evasion Lab")
+    st.write("Simulate techniques sophisticated threat actors use to bypass DNA synthesis screening, and evaluate the robustness of our multi-tiered screener against these evasion attempts.")
+    
+    col_play1, col_play2 = st.columns([1, 2])
+    
+    with col_play1:
+        st.subheader("Select Threat Target & Attack Type")
+        
+        threat_preset = st.selectbox(
+            "Select Baseline Pathogen Target:",
+            ["threat_viral_glycoprotein", "threat_biological_toxin"]
+        )
+        
+        from data_generator import reverse_translate
+        base_aa = TEMPLATES[threat_preset]
+        base_dna = reverse_translate(base_aa, use_bias=True, seed=10)
+        
+        attack_type = st.radio(
+            "Select Adversarial Attack to Apply:",
+            [
+                "1. Codon Optimization (Synonymous Mutations)",
+                "2. Sequence Fragmentation (Split Synthesis)",
+                "3. Chimeric Carrier Insertion"
+            ]
+        )
+        
+        if attack_type.startswith("2."):
+            num_splits = st.slider("Number of Fragment Splits", min_value=2, max_value=5, value=3)
+            overlap_bp = st.slider("Overlap BP for assembly", min_value=10, max_value=50, value=30)
+        elif attack_type.startswith("3."):
+            insert_pos = st.slider("Insertion Offset in Vector", min_value=100, max_value=700, value=400)
+            
+        run_attack = st.button("Apply Attack & Test Screener")
+        
+    with col_play2:
+        st.subheader("Attack Performance Visualizer")
+        
+        if run_attack:
+            original_aa = translate_dna(base_dna)
+            backbone_dna = "GATC" * 200 # 800bp carrier
+            
+            if attack_type.startswith("1."):
+                obfuscated_dna = obfuscate_codon_optimization(base_dna, seed=42)
+                obfuscated_aa = translate_dna(obfuscated_dna)
+                
+                hamming_dist = sum(1 for c1, c2 in zip(base_dna, obfuscated_dna) if c1 != c2)
+                percent_mut = (hamming_dist / len(base_dna)) * 100
+                
+                st.info("⚙️ **Synonymous Mutations Applied:** {} codon substitutions introduced.".format(hamming_dist))
+                st.write("**Original vs. Mutated DNA Sequence Similarity:** {:.1f}%".format(100 - percent_mut))
+                
+                st.write("**DNA Sequence Alignment Snippet (original vs modified):**")
+                slice_len = 50
+                st.code("Original: " + base_dna[:slice_len] + "...\nModified: " + obfuscated_dna[:slice_len] + "...")
+                
+                st.write("**Protein Sequence Check:**")
+                st.write("Original Translated AA: `{}...`".format(original_aa[:20]))
+                st.write("Modified Translated AA: `{}...`".format(obfuscated_aa[:20]))
+                st.success("✅ **Attack verification:** Amino acid translation remains 100% identical. Biological function preserved.")
+                
+                rep_base = screener.screen_sequence(base_dna)
+                rep_obf = screener.screen_sequence(obfuscated_dna)
+                
+                # Format ML prob cells
+                base_ml = "{:.1f}%".format(rep_base['tier3_prob']*100) if SKLEARN_AVAILABLE else "Disabled"
+                obf_ml = "{:.1f}%".format(rep_obf['tier3_prob']*100) if SKLEARN_AVAILABLE else "Disabled"
+                
+                st.write("**Screening Evasion Comparison:**")
+                comparison_df = pd.DataFrame({
+                    "Screening Metric": ["Tier 1 Exact Match", "Tier 2 Homology (% identity)", "Tier 3 ML (threat prob.)", "Final Decision"],
+                    "Baseline Pathogen": ["🔴 Flagged" if rep_base['tier1_flag'] else "🟢 Cleared", "{:.1f}%".format(rep_base['highest_identity']*100), base_ml, "🚨 Flagged" if rep_base['flagged'] else "✅ Cleared"],
+                    "Obfuscated Pathogen": ["🟢 Cleared" if not rep_obf['tier1_flag'] else "🔴 Flagged", "{:.1f}%".format(rep_obf['highest_identity']*100), obf_ml, "🚨 Flagged" if rep_obf['flagged'] else "✅ Cleared"]
+                })
+                st.table(comparison_df)
+                
+                if not rep_obf['tier1_flag'] and rep_obf['flagged']:
+                    st.warning("⚠️ **Note:** The adversary successfully bypassed **Tier 1 (Exact Match)**. However, the order was still flagged by **Tier 2 Homology Alignment** (and Tier 3 ML, if active).")
+
+            elif attack_type.startswith("2."):
+                fragments = obfuscate_split_sequence(base_dna, num_splits=num_splits, overlap=overlap_bp)
+                st.info("✂️ **Sequence Fragmented:** DNA divided into {} segments to be assembled using Gibson Overlap.".format(num_splits))
+                
+                for idx, frag in enumerate(fragments):
+                    st.write("**Fragment {}:** {} nucleotides".format(idx+1, len(frag)))
+                    
+                frag_reports = [screener.screen_sequence(f) for f in fragments]
+                
+                st.write("**Screening Results by Fragment:**")
+                results_frag = []
+                for idx, r in enumerate(frag_reports):
+                    ml_val = "{:.1f}%".format(r['tier3_prob']*100) if SKLEARN_AVAILABLE else "Disabled"
+                    results_frag.append({
+                        "Fragment": f"Segment {idx+1}",
+                        "Length (bp)": len(fragments[idx]),
+                        "Tier 1 (Exact Match)": "Flagged" if r['tier1_flag'] else "Passed",
+                        "Tier 2 (Homology)": "{:.1f}%".format(r['highest_identity']*100),
+                        "Tier 3 (ML Prob)": ml_val,
+                        "Action": "🔴 Blocked" if r['flagged'] else "🟢 Cleared"
+                    })
+                st.table(pd.DataFrame(results_frag))
+                
+                any_blocked = any(r['flagged'] for r in frag_reports)
+                if not any_blocked:
+                    st.error("💀 **Critical Evasion:** All individual fragments successfully bypassed screening! The order would be fulfilled, allowing full assembly of the pathogen in-house.")
+                else:
+                    st.success("🛡️ **Defense Active:** At least one fragment triggered safety flags. Order blocked.")
+
+            elif attack_type.startswith("3."):
+                chimeric_dna = obfuscate_chimeric_insert(base_dna, backbone_dna, insert_position=insert_pos)
+                st.info("🧬 **Chimeric Insertion:** Pathogen gene inserted inside benign vector backbone.")
+                st.write("**Total construct size:** {} bp (Original pathogen size: {} bp)".format(len(chimeric_dna), len(base_dna)))
+                
+                rep_chimeric = screener.screen_sequence(chimeric_dna)
+                
+                ml_val = "{:.1f}%".format(rep_chimeric['tier3_prob']*100) if SKLEARN_AVAILABLE else "Disabled"
+                st.write("**Screening Results on Construct:**")
+                st.write("- **Tier 1 Exact Match:**", "🔴 Triggered" if rep_chimeric['tier1_flag'] else "🟢 Passed")
+                st.write("- **Tier 2 Homology Match:**", "{:.1f}% Identity".format(rep_chimeric['highest_identity']*100))
+                st.write("- **Tier 3 ML Classifier:**", ml_val)
+                st.write("- **Screener Action:**", "**🔴 Block Order**" if rep_chimeric['flagged'] else "**🟢 Clear Order**")
+                
+                if rep_chimeric['flagged']:
+                    st.success("🛡️ **Defense Active:** Insertion was flagged. Local protein alignment / ML identified the pathogen insert.")
+                else:
+                    st.error("💀 **Screener Bypassed:** Screener cleared the construct, failing to detect insertion.")
+        else:
+            st.info("👈 Set your parameters and click 'Apply Attack & Test Screener' to run the adversarial simulation.")
+
+# ----------------- TAB 3: SYSTEM EVALS -----------------
+with tab3:
+    st.header("System Performance & Evals Benchmarks")
+    st.write("Performance analysis of the BioGuard screening engine across the testing dataset, comparing standard baseline sequences against various adversarial bypass strategies.")
+    
+    col_card1, col_card2, col_card3, col_card4 = st.columns(4)
+    summary = report_data["summary"]
+    
+    with col_card1:
+        st.metric("Benign False Positive Rate", "{:.2f}%".format(summary["benign_baseline"]["false_positive_rate"] * 100))
+    with col_card2:
+        st.metric("Baseline Threat Detection", "{:.2f}%".format(summary["threat_baseline"]["detection_rate"] * 100))
+    with col_card3:
+        st.metric("Codon-Opt Threat Detection", "{:.2f}%".format(summary["threat_codon_opt"]["detection_rate"] * 100))
+    with col_card4:
+        st.metric("Split Threat Detection", "{:.2f}%".format(summary["threat_split"]["detection_rate"] * 100))
+        
+    st.markdown("---")
+    
+    st.subheader("Detection Rates Breakdown by Tier")
+    
+    categories = ["Baseline Threats", "Codon-Optimized", "Split Sequence", "Chimeric Insert"]
+    t1_rates = [
+        summary["threat_baseline"]["tier1_trigger_rate"] * 100,
+        summary["threat_codon_opt"]["tier1_trigger_rate"] * 100,
+        summary["threat_split"]["tier1_trigger_rate"] * 100,
+        summary["threat_chimeric"]["tier1_trigger_rate"] * 100
+    ]
+    t2_rates = [
+        summary["threat_baseline"]["tier2_trigger_rate"] * 100,
+        summary["threat_codon_opt"]["tier2_trigger_rate"] * 100,
+        summary["threat_split"]["tier2_trigger_rate"] * 100,
+        summary["threat_chimeric"]["tier2_trigger_rate"] * 100
+    ]
+    
+    fig = go.Figure()
+    fig.add_trace(go.Bar(name='Tier 1 (Exact Match)', x=categories, y=t1_rates, marker_color='#ef4444'))
+    fig.add_trace(go.Bar(name='Tier 2 (Homology Local)', x=categories, y=t2_rates, marker_color='#f59e0b'))
+    
+    if SKLEARN_AVAILABLE:
+        t3_rates = [
+            summary["threat_baseline"]["tier3_trigger_rate"] * 100,
+            summary["threat_codon_opt"]["tier3_trigger_rate"] * 100,
+            summary["threat_split"]["tier3_trigger_rate"] * 100,
+            summary["threat_chimeric"]["tier3_trigger_rate"] * 100
+        ]
+        fig.add_trace(go.Bar(name='Tier 3 (ML Functional)', x=categories, y=t3_rates, marker_color='#3b82f6'))
+        
+    final_rates = [
+        summary["threat_baseline"]["detection_rate"] * 100,
+        summary["threat_codon_opt"]["detection_rate"] * 100,
+        summary["threat_split"]["detection_rate"] * 100,
+        summary["threat_chimeric"]["detection_rate"] * 100
+    ]
+    fig.add_trace(go.Bar(name='Total Flagged (Combined)', x=categories, y=final_rates, marker_color='#10b981'))
+    
+    fig.update_layout(
+        barmode='group',
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        font_color='#ffffff',
+        yaxis_title="Detection / Trigger Rate (%)",
+        yaxis_range=[0, 105],
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+    )
+    
+    st.plotly_chart(fig, use_container_width=True)
+    
+    st.markdown("""
+    > [!IMPORTANT]
+    > **Evals Analysis & Findings:**
+    > * **Tier 1 (Exact DNA Matching)** is highly effective against unmodified pathogens, but drops to **0% detection** under codon optimization because nucleotide-level signatures are lost.
+    > * **Tier 2 (Homology Alignment)** acts as a robust second line of defense against codon optimization, but its sensitivity drops when sequences are fragmented (Split synthesis) because the alignment length falls below matching thresholds.
+    > * **Tier 3 (ML Functional Classifier)** (if active) remains resilient across all attacks, learning amino acid k-mer patterns that represent the overall biological family, providing crucial safety redundancies.
+    """)
